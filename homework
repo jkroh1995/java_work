@@ -28,39 +28,46 @@ class ReturnMoney extends BatMoney{ //[주석 2 : 클래스 상속] 받을 금�
 	}
 	
 }
-class Timer implements Runnable{
-	int k=3;
+class Timer extends Thread{
+	int k=4;
 	public void run() {
-		while(k==0) {
-			System.out.println(k);
+		while(k>1) {
 			k--;
+			System.out.println(k);
+			
 			try {
 				Thread.sleep(1000);
 			}
-			catch(InterruptedException e) {return;}
+			catch(InterruptedException e){
+				return;
+			}
+			if(k==1) {
+				System.out.println("출발!");
+			}
 		}
 	}
 }
 
 
 class Horse1 extends Thread{ // [주석 10 : 다중 스레드(Thread 클래스)]
-	int i=1;
-	String Horse_1;
-	public Horse1(String name_1) {
+	int i=0;
+	int Horse_1;
+	public Horse1(int name_1) {
 		Horse_1 = name_1;
 	}
 	public void run() { // [주석 6 : 오버라이딩]
-		while(i<11) {
-			System.out.printf(Horse_1 + "번 말이 %d만큼 달립니다!", i);
+		while(i<10) {
 			i++;
+			System.out.printf(Horse_1 + "번 말이 %d만큼 달립니다!\n", i);
+			
 			try {
-				Thread.sleep(1000);
+				Thread.sleep(500);
 			}
 			catch(InterruptedException e) { //[주석 8 : 예외처리]
 				return;
 			}
 			if(i==10) {
-				System.out.printf(Horse_1 + "번 말이 도착했습니다!");
+				System.out.printf(Horse_1 + "번 말이 도착했습니다!\n");
 			}
 		}
    }
@@ -77,7 +84,7 @@ class Horse2 implements Runnable{ //[주석 11 : 다중 스레드(Runnable 인�
 			System.out.printf(Horse_2 + "번 말이 %d만큼 달립니다!", n);
 			n++;
 			try {//[주석 8 : 예외처리]
-				Thread.sleep(1000);
+				Thread.sleep(500);
 			}
 			catch(InterruptedException e) {
 				return;
@@ -111,9 +118,11 @@ public class Main {
 
 		System.out.println(" 맞출시 받을 금액은" + rm.bat(bill) + "만원 입니다.");
 		System.out.println("잠시 후 경주가 시작됩니다!");
-		
-		Thread time = new Thread(new Timer());
+		Horse1 h1 = new Horse1(number);
+		Timer time = new Timer();
 		time.start();
+		h1.start();
+		
 		}
 		
 		
@@ -121,5 +130,7 @@ public class Main {
 
 		
 	}
+
+//timer 스레드 동기화 해서 3,2,1 먼저 출력 완료 된 다음 달리기 시작하게 만들어야 함
 
 	
