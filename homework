@@ -43,7 +43,7 @@ class Horse1 extends Thread{ // [주석 10 : 다중 스레드(Thread 클래스)]
 		int b = (int)(a*10);
 		while(i<b) {
 			i++;
-			System.out.printf(Horse_1 + "번 말이 %d만큼 달립니다!\n", i);
+			System.out.printf(Horse_1 + "번 말이 %d바퀴 달립니다!\n", i);
 			
 			try {
 				Thread.sleep(500);
@@ -52,7 +52,7 @@ class Horse1 extends Thread{ // [주석 10 : 다중 스레드(Thread 클래스)]
 				return;
 			}
 			if(i==b) {
-				System.out.printf(Horse_1 + "번 말이 도착했습니다!\n");
+				System.out.printf(Horse_1 + "번 말이 멈춥니다!\n");
 			}
 		}
    }
@@ -68,7 +68,7 @@ class Horse2 implements Runnable{ //[주석 11 : 다중 스레드(Runnable 인�
 		int b = (int)(a*10);
 		while(i<b) {
 			i++;
-			System.out.printf(Horse_2 + "번 말이 %d만큼 달립니다!\n", i);
+			System.out.printf(Horse_2 + "번 말이 %d바퀴 달립니다!\n", i);
 			
 			try {
 				Thread.sleep(500);
@@ -77,7 +77,57 @@ class Horse2 implements Runnable{ //[주석 11 : 다중 스레드(Runnable 인�
 				return;
 			}
 			if(i==b) {
-				System.out.printf(Horse_2 + "번 말이 도착했습니다!\n");
+				System.out.printf(Horse_2 + "번 말이 멈춥니다!\n");
+			}
+		}
+   }
+}
+class Horse3 implements Runnable{ //[주석 11 : 다중 스레드(Runnable 인터페이스)]
+	int i=0;
+	int Horse_3;
+	public Horse3(int name_3) {
+		Horse_3 = name_3;
+	}
+	public void run() { // [주석 6 : 오버라이딩]
+		double a = Math.random();
+		int b = (int)(a*10);
+		while(i<b) {
+			i++;
+			System.out.printf(Horse_3 + "번 말이 %d바퀴 달립니다!\n", i);
+			
+			try {
+				Thread.sleep(500);
+			}
+			catch(InterruptedException e) { //[주석 8 : 예외처리]
+				return;
+			}
+			if(i==b) {
+				System.out.printf(Horse_3 + "번 말이 멈춥니다!\n");
+			}
+		}
+   }
+}
+class Horse4 implements Runnable{ //[주석 11 : 다중 스레드(Runnable 인터페이스)]
+	int i=0;
+	int Horse_4;
+	public Horse4(int name_4) {
+		Horse_4 = name_4;
+	}
+	public void run() { // [주석 6 : 오버라이딩]
+		double a = Math.random();
+		int b = (int)(a*10);
+		while(i<b) {
+			i++;
+			System.out.printf(Horse_4 + "번 말이 %d바퀴 달립니다!\n", i);
+			
+			try {
+				Thread.sleep(500);
+			}
+			catch(InterruptedException e) { //[주석 8 : 예외처리]
+				return;
+			}
+			if(i==b) {
+				System.out.printf(Horse_4 + "번 말이 멈춥니다!\n");
 			}
 		}
    }
@@ -85,11 +135,17 @@ class Horse2 implements Runnable{ //[주석 11 : 다중 스레드(Runnable 인�
 public class Main {
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
+		Horse1 h1 = new Horse1(1);
+		Thread h2 = new Thread(new Horse2(2));
+		Thread h3 = new Thread(new Horse3(3));
+		Thread h4 = new Thread(new Horse4(4));
 		System.out.println("배팅할 말의 번호를 고르세요(1~4번) : ");
 		int number = sc.nextInt();
+		Runnable selected_horse;
 		switch (number) {
 		case 1:
 			System.out.printf("%d번 말을 고르셨습니다\n", number);
+			selected_horse = Horse
 			break;
 		case 2:
 			System.out.printf("%d번 말을 고르셨습니다\n", number);
@@ -115,10 +171,10 @@ public class Main {
 
 		System.out.println(" 맞출시 받을 금액은" + rm.bat(bill) + "만원 입니다.");
 		System.out.println("잠시 후 경주가 시작됩니다!");
-		Horse1 h1 = new Horse1(1);
-		Thread h2 = new Thread(new Horse2(2));
 		h1.start();
 		h2.start();
+		h3.start();
+		h4.start();
 		}
 		
 		
