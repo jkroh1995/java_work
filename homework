@@ -30,9 +30,11 @@ class ReturnMoney extends BatMoney{ //[주석 2 : 클래스 상속] 받을 금�
 	
 }
 
+interface GetResult{
+	int get_result();
+}
 
-
-class Horse1 extends Thread{ // [주석 10 : 다중 스레드(Thread 클래스)]
+class Horse1 extends Thread implements GetResult{ // [주석 10 : 다중 스레드(Thread 클래스)]
 	int i=0;
 	int Horse_1;
 	public Horse1(int name_1) {
@@ -56,8 +58,11 @@ class Horse1 extends Thread{ // [주석 10 : 다중 스레드(Thread 클래스)]
 			}
 		}
    }
+	public int get_result() {
+		return i;
+	}
 }
-class Horse2 implements Runnable{ //[주석 11 : 다중 스레드(Runnable 인터페이스)]
+class Horse2 implements Runnable, GetResult{ //[주석 11 : 다중 스레드(Runnable 인터페이스)]
 	int i=0;
 	int Horse_2;
 	public Horse2(int name_2) {
@@ -79,10 +84,15 @@ class Horse2 implements Runnable{ //[주석 11 : 다중 스레드(Runnable 인�
 			if(i==b) {
 				System.out.printf(Horse_2 + "번 말이 멈춥니다!\n");
 			}
+			
 		}
    }
+	public int get_result() {
+		return i;
+	}
+	
 }
-class Horse3 implements Runnable{ //[주석 11 : 다중 스레드(Runnable 인터페이스)]
+class Horse3 implements Runnable, GetResult{ //[주석 11 : 다중 스레드(Runnable 인터페이스)]
 	int i=0;
 	int Horse_3;
 	public Horse3(int name_3) {
@@ -106,8 +116,11 @@ class Horse3 implements Runnable{ //[주석 11 : 다중 스레드(Runnable 인�
 			}
 		}
    }
+	public int get_result() {
+		return i;
+	}
 }
-class Horse4 implements Runnable{ //[주석 11 : 다중 스레드(Runnable 인터페이스)]
+class Horse4 implements Runnable, GetResult{ //[주석 11 : 다중 스레드(Runnable 인터페이스)]
 	int i=0;
 	int Horse_4;
 	public Horse4(int name_4) {
@@ -131,6 +144,9 @@ class Horse4 implements Runnable{ //[주석 11 : 다중 스레드(Runnable 인�
 			}
 		}
    }
+	public int get_result() {
+		return i;
+	}
 }
 public class Main {
 	public static void main(String[] args) {
@@ -141,20 +157,23 @@ public class Main {
 		Thread h4 = new Thread(new Horse4(4));
 		System.out.println("배팅할 말의 번호를 고르세요(1~4번) : ");
 		int number = sc.nextInt();
-		Runnable selected_horse;
+		GetResult selected_horse;
 		switch (number) {
 		case 1:
 			System.out.printf("%d번 말을 고르셨습니다\n", number);
-			selected_horse = Horse
+			selected_horse = h1;
 			break;
 		case 2:
 			System.out.printf("%d번 말을 고르셨습니다\n", number);
+			selected_horse = h2;
 			break;
 		case 3:
 			System.out.printf("%d번 말을 고르셨습니다\n", number);
+			selected_horse = h3;
 			break;
 		case 4:
-			System.out.printf("%d번 말을 고르셨습니다\n", number);	
+			System.out.printf("%d번 말을 고르셨습니다\n", number);
+			selected_horse = h4;
 			break;
 		default:
 			System.out.println("잘못된 번호입니다.");
@@ -175,6 +194,13 @@ public class Main {
 		h2.start();
 		h3.start();
 		h4.start();
+		
+	
+		
+		int winner = 0;
+		
+		
+		
 		}
 		
 		
