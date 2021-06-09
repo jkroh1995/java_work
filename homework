@@ -9,7 +9,7 @@ import java.util.Scanner;
 학번 : 201501076
 이름 : 노재경
 
-과제 주제 : 쓰레드 비동기화를 통한 경마 프로그램 제작, 1~4번 말 중 선택해 금액을 배팅하고 가장 먼저 도착하는 말을 맞출 시 배팅 금액의 3배를 받음
+과제 주제 : 쓰레드4개를 통한 말의 오래 달리기 프로그렘 제작, 1~4번 말 중 선택해 금액을 배팅하고 가장 오래 달리는 말을 맞출 시 배팅 금액의 3배를 받음
 
 */
 abstract class BatMoney{ //[주석 7 : 추상클래스]
@@ -31,18 +31,41 @@ class ReturnMoney extends BatMoney{ //[주석 2 : 클래스 상속] 받을 금�
 }
 
 interface GetResult{
-	int get_result();
+	int get_result(); // 내가 선택한 말의 번호를 저장
 }
-
-class Horse1 extends Thread implements GetResult{ // [주석 10 : 다중 스레드(Thread 클래스)]
+interface Select{
+	public void select(); // 몇 번 말을 선택했는지 출력
+}
+class Timer implements Runnable{ //[주석 10 : 다중 스레드(Runnable 인터페이스)]
+	public void run() {
+		int i = 3;
+		while(i>0) {
+			System.out.println(i);
+			i--;
+			try {
+				Thread.sleep(1000);
+			}
+			catch(InterruptedException e) { //[주석 8 : 예외처리]
+				return;
+			}
+		}
+	}
+}
+class Horse1 extends Thread implements GetResult, Select{ //[주석 11 : 다중 스레드(Runnable 인터페이스)], [주석 9 : 다중 인터페이스]
 	int i=0;
 	int Horse_1;
 	public Horse1(int name_1) {
 		Horse_1 = name_1;
 	}
+	public void select() {
+		System.out.println(Horse_1 + "번 말을 선택했습니다.");
+	}
 	public void run() { // [주석 6 : 오버라이딩]
 		double a = Math.random();
 		int b = (int)(a*10);
+		if (b==0) {
+			System.out.printf(Horse_1 + "번 말이 뛰지를 않습니다! 안타깝군요!\n");
+		}
 		while(i<b) {
 			i++;
 			System.out.printf(Horse_1 + "번 말이 %d바퀴 달립니다!\n", i);
@@ -62,15 +85,21 @@ class Horse1 extends Thread implements GetResult{ // [주석 10 : 다중 스레�
 		return i;
 	}
 }
-class Horse2 implements Runnable, GetResult{ //[주석 11 : 다중 스레드(Runnable 인터페이스)]
+class Horse2 extends Thread implements GetResult, Select{ //[주석 11 : 다중 스레드(Runnable 인터페이스)], [주석 9 : 다중 인터페이스]
 	int i=0;
 	int Horse_2;
 	public Horse2(int name_2) {
 		Horse_2 = name_2;
 	}
+	public void select() {
+		System.out.println(Horse_2 + "번 말을 선택했습니다.");
+	}
 	public void run() { // [주석 6 : 오버라이딩]
 		double a = Math.random();
 		int b = (int)(a*10);
+		if (b==0) {
+			System.out.printf(Horse_2 + "번 말이 뛰지를 않습니다! 안타깝군요!\n");
+		}
 		while(i<b) {
 			i++;
 			System.out.printf(Horse_2 + "번 말이 %d바퀴 달립니다!\n", i);
@@ -92,15 +121,21 @@ class Horse2 implements Runnable, GetResult{ //[주석 11 : 다중 스레드(Run
 	}
 	
 }
-class Horse3 implements Runnable, GetResult{ //[주석 11 : 다중 스레드(Runnable 인터페이스)]
+class Horse3 extends Thread implements GetResult, Select{ //[주석 11 : 다중 스레드(Runnable 인터페이스)], [주석 9 : 다중 인터페이스]
 	int i=0;
 	int Horse_3;
 	public Horse3(int name_3) {
 		Horse_3 = name_3;
 	}
+	public void select() {
+		System.out.println(Horse_3 + "번 말을 선택했습니다.");
+	}
 	public void run() { // [주석 6 : 오버라이딩]
 		double a = Math.random();
 		int b = (int)(a*10);
+		if (b==0) {
+			System.out.printf(Horse_3 + "번 뛰지를 않습니다! 안타깝군요!\n");
+		}
 		while(i<b) {
 			i++;
 			System.out.printf(Horse_3 + "번 말이 %d바퀴 달립니다!\n", i);
@@ -111,7 +146,7 @@ class Horse3 implements Runnable, GetResult{ //[주석 11 : 다중 스레드(Run
 			catch(InterruptedException e) { //[주석 8 : 예외처리]
 				return;
 			}
-			if(i==b) {
+			if(i==b){
 				System.out.printf(Horse_3 + "번 말이 멈춥니다!\n");
 			}
 		}
@@ -120,15 +155,21 @@ class Horse3 implements Runnable, GetResult{ //[주석 11 : 다중 스레드(Run
 		return i;
 	}
 }
-class Horse4 implements Runnable, GetResult{ //[주석 11 : 다중 스레드(Runnable 인터페이스)]
+class Horse4 extends Thread implements GetResult, Select{ //[주석 11 : 다중 스레드(Runnable 인터페이스)], [주석 9 : 다중 인터페이스]
 	int i=0;
 	int Horse_4;
 	public Horse4(int name_4) {
 		Horse_4 = name_4;
 	}
+	public void select() {
+		System.out.println(Horse_4 + "번 말을 선택했습니다.");
+	}
 	public void run() { // [주석 6 : 오버라이딩]
 		double a = Math.random();
 		int b = (int)(a*10);
+		if (b==0) {
+			System.out.printf(Horse_4 + "번 뛰지를 않습니다! 안타깝군요!\n");
+		}
 		while(i<b) {
 			i++;
 			System.out.printf(Horse_4 + "번 말이 %d바퀴 달립니다!\n", i);
@@ -152,31 +193,32 @@ public class Main {
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
 		Horse1 h1 = new Horse1(1);
-		Thread h2 = new Thread(new Horse2(2));
-		Thread h3 = new Thread(new Horse3(3));
-		Thread h4 = new Thread(new Horse4(4));
+		Horse2 h2 = new Horse2(2);
+		Horse3 h3 = new Horse3(3);
+		Horse4 h4 = new Horse4(4);
 		System.out.println("배팅할 말의 번호를 고르세요(1~4번) : ");
 		int number = sc.nextInt();
 		GetResult selected_horse;
-		switch (number) {
+		switch (number) { //입력받은 번호에 따른 변환
 		case 1:
-			System.out.printf("%d번 말을 고르셨습니다\n", number);
 			selected_horse = h1;
+			h1.select();
 			break;
 		case 2:
-			System.out.printf("%d번 말을 고르셨습니다\n", number);
 			selected_horse = h2;
+			h2.select();
 			break;
 		case 3:
-			System.out.printf("%d번 말을 고르셨습니다\n", number);
 			selected_horse = h3;
+			h3.select();
 			break;
 		case 4:
-			System.out.printf("%d번 말을 고르셨습니다\n", number);
 			selected_horse = h4;
+			h4.select();
 			break;
 		default:
 			System.out.println("잘못된 번호입니다.");
+			selected_horse = h1; // int x = selected_horse.get_result();의 빌드에러 방지를 위해 초기화, number=0으로 초기화하기 때문에 프로그램의 진행에는 영향 없음 
 			number = 0;
 		}
 		if(number !=0) {
@@ -190,17 +232,46 @@ public class Main {
 
 		System.out.println(" 맞출시 받을 금액은" + rm.bat(bill) + "만원 입니다.");
 		System.out.println("잠시 후 경주가 시작됩니다!");
+		Thread t = new Thread(new Timer());
+		t.start();
+        try { //[주석 8 : 예외처리]
+            // 해당 쓰레드가 멈출때까지 멈춤
+            t.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 		h1.start();
 		h2.start();
 		h3.start();
 		h4.start();
+	     try { //[주석 8 : 예외처리]
+	            // 해당 쓰레드가 멈출때까지 멈춤
+	            h1.join();
+	            h2.join();
+	            h3.join();
+	            h4.join();
+	        } catch (InterruptedException e) {
+	            e.printStackTrace();
+	        }
 		
-	
+		int winner = h1.get_result();
+		if(h2.get_result()>winner) {
+			winner = h2.get_result();
+		}		
+		if(h3.get_result()>winner) {
+			winner = h3.get_result();
+		}
+		if(h4.get_result()>winner) {
+			winner = h4.get_result();
+		}
+		int x = selected_horse.get_result();
 		
-		int winner = 0;
-		
-		
-		
+		if(winner == x) {
+			System.out.print("축하합니다! 우승입니다!");
+			System.out.printf("우승 상금은 %.1f만원입니다!",rm.bat(bill));
+		}
+		else
+			System.out.print("아쉽게도 우승자 예측에 실패했습니다.");
 		}
 		
 		
@@ -210,6 +281,8 @@ public class Main {
 }
 
 
-//timer 스레드 동기화 해서 3,2,1 먼저 출력 완료 된 다음 달리기 시작하게 만들어야 함
+//static method 빼기 - 마지막 if(winner)에서 출력문으로 퉁치면 될듯
+//get_result값이 서로 같으면 어떡하지?
+
 
 	
