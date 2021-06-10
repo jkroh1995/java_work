@@ -9,7 +9,7 @@ import java.util.Scanner;
 학번 : 201501076
 이름 : 노재경
 
-과제 주제 : 쓰레드4개를 통한 말의 오래 달리기 프로그렘 제작, 1~4번 말 중 선택해 금액을 배팅하고 가장 오래 달리는 말을 맞출 시 배팅 금액의 3배를 받음
+과제 주제 : 말의 오래 달리기 프로그렘 제작, 쓰레드 4개를 각각의 말로 이용해 1~4번 말 중 선택해 금액을 배팅하고 가장 오래 달리는 말을 맞출 시 배팅 금액의 3배를 받음
 
 */
 abstract class BatMoney{ //[주석 7 : 추상클래스]
@@ -18,13 +18,12 @@ abstract class BatMoney{ //[주석 7 : 추상클래스]
 	public abstract double bat(double money); //[주석 5 : 오버로딩]
 }
 
-class ReturnMoney extends BatMoney{ //[주석 2 : 클래스 상속] 받을 금액 계산
 
-	
-	public int bat(int money){
+class ReturnMoney extends BatMoney{ //[주석 2 : 클래스 상속] 예상 성공 시 받을 금액 계산
+	public int bat(int money){// [주석 6 : 오버라이딩]
 		return (int)money * 3;
 	}
-	public double bat(double money) { // [주석 5 : 오버로딩]
+	public double bat(double money) { // [주석 6 : 오버라이딩]
 		return money * 3;
 	}
 	
@@ -36,7 +35,7 @@ interface GetResult{
 interface Select{
 	public void select(); // 몇 번 말을 선택했는지 출력
 }
-class Timer implements Runnable{ //[주석 10 : 다중 스레드(Runnable 인터페이스)]
+class Timer implements Runnable{ //[주석 11 : 다중 스레드(Runnable 인터페이스)]
 	public void run() {
 		int i = 3;
 		while(i>0) {
@@ -51,7 +50,7 @@ class Timer implements Runnable{ //[주석 10 : 다중 스레드(Runnable 인터
 		}
 	}
 }
-class Horse1 extends Thread implements GetResult, Select{ //[주석 11 : 다중 스레드(Runnable 인터페이스)], [주석 9 : 다중 인터페이스]
+class Horse1 extends Thread implements GetResult, Select{ //[주석 10 : 다중 스레드(Thread 클래스)], [주석 9 : 다중 인터페이스]
 	int i=0;
 	int Horse_1;
 	public Horse1(int name_1) {
@@ -85,7 +84,7 @@ class Horse1 extends Thread implements GetResult, Select{ //[주석 11 : 다중 
 		return i;
 	}
 }
-class Horse2 extends Thread implements GetResult, Select{ //[주석 11 : 다중 스레드(Runnable 인터페이스)], [주석 9 : 다중 인터페이스]
+class Horse2 extends Thread implements GetResult, Select{ //[주석 10 : 다중 스레드(Thread 클래스)], [주석 9 : 다중 인터페이스]
 	int i=0;
 	int Horse_2;
 	public Horse2(int name_2) {
@@ -121,7 +120,7 @@ class Horse2 extends Thread implements GetResult, Select{ //[주석 11 : 다중 
 	}
 	
 }
-class Horse3 extends Thread implements GetResult, Select{ //[주석 11 : 다중 스레드(Runnable 인터페이스)], [주석 9 : 다중 인터페이스]
+class Horse3 extends Thread implements GetResult, Select{ //[주석 10 : 다중 스레드(Thread 클래스)], [주석 9 : 다중 인터페이스]
 	int i=0;
 	int Horse_3;
 	public Horse3(int name_3) {
@@ -155,7 +154,7 @@ class Horse3 extends Thread implements GetResult, Select{ //[주석 11 : 다중 
 		return i;
 	}
 }
-class Horse4 extends Thread implements GetResult, Select{ //[주석 11 : 다중 스레드(Runnable 인터페이스)], [주석 9 : 다중 인터페이스]
+class Horse4 extends Thread implements GetResult, Select{ //[주석 10 : 다중 스레드(Thread 클래스)], [주석 9 : 다중 인터페이스]
 	int i=0;
 	int Horse_4;
 	public Horse4(int name_4) {
@@ -189,7 +188,17 @@ class Horse4 extends Thread implements GetResult, Select{ //[주석 11 : 다중 
 		return i;
 	}
 }
+
+
+
 public class Main {
+	public static void win(double a, double b) { //[주석 4 : static 메소드]
+		System.out.println("축하합니다!우승입니다!");
+		System.out.printf("%.1f만원을 배팅하셨습니다! 우승 상금은 %.1f만원입니다!",a, b);
+	}
+	public static void lose() {
+		System.out.print("아쉽게도 우승자 예측에 실패했습니다.");
+	}
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
 		Horse1 h1 = new Horse1(1);
@@ -227,6 +236,7 @@ public class Main {
 		if(bill-(int)bill==0.0) { // 정수형태로 입력 받으면 bill을 정수로 형변환
 			bill = (int)bill;
 		}
+		sc.close();
 		System.out.printf("배팅한 금액은 %.1f만원 입니다", bill);
 		ReturnMoney rm = new ReturnMoney(); // [주석 3 : 생성자]
 
@@ -267,11 +277,10 @@ public class Main {
 		int x = selected_horse.get_result();
 		
 		if(winner == x) {
-			System.out.print("축하합니다! 우승입니다!");
-			System.out.printf("우승 상금은 %.1f만원입니다!",rm.bat(bill));
+			win(bill, rm.bat(bill));
 		}
 		else
-			System.out.print("아쉽게도 우승자 예측에 실패했습니다.");
+			lose();
 		}
 		
 		
@@ -281,8 +290,8 @@ public class Main {
 }
 
 
-//static method 빼기 - 마지막 if(winner)에서 출력문으로 퉁치면 될듯
-//get_result값이 서로 같으면 어떡하지?
+
+
 
 
 	
