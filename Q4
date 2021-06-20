@@ -1,0 +1,33 @@
+import java.util.*;
+
+public class 고객포인트해시맵 {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		HashMap<String, Integer> customer = new HashMap<String, Integer>();
+		Scanner sc = new Scanner(System.in);
+		System.out.println("**포인트 관리 프로그램입니다**");
+		while(true) {
+			System.out.print("이름과 포인트 입력 >>");
+			String name = sc.next();
+			if(name.equals("그만"))
+				break;
+			int point = sc.nextInt();
+			Set<String>set = customer.keySet();
+			for(int i=0;i<set.size();i++) {
+				if(name.equals(set.get(i)) {
+					
+				}
+					
+			}
+			customer.put(name, point);
+			
+			
+			
+			
+		}
+		
+
+	}
+
+}
