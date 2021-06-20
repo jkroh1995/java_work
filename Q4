@@ -13,16 +13,26 @@ public class 고객포인트해시맵 {
 			if(name.equals("그만"))
 				break;
 			int point = sc.nextInt();
-			Set<String>set = customer.keySet();
-			for(int i=0;i<set.size();i++) {
-				if(name.equals(set.get(i)) {
-					
+			for(int i=0;i<customer.size();i++) {
+				if(customer.get(name) == null) {
+					customer.put(name, point);
+					break;
 				}
-					
+				else {
+					int value = customer.get(name);
+					point = point + value;
+					customer.remove(name);
+					customer.put(name, point);
+					break;
+				}					
 			}
-			customer.put(name, point);
-			
-			
+			Set<String>set = customer.keySet();
+			Iterator<String>it=set.iterator();
+			while(it.hasNext()) {
+				String name1 = it.next();
+				int point1 = customer.get(name1);
+				System.out.println("("+name1+","+point1+")");
+			}
 			
 			
 		}
@@ -31,3 +41,31 @@ public class 고객포인트해시맵 {
 	}
 
 }
+
+** 포인트 관리 프로그램입니다 **
+
+이름과 포인트 입력 >> 이재문 40
+
+(이재문,40)
+
+이름과 포인트 입력 >> 황기태 50
+
+(이재문,40)(황기태,50)
+
+이름과 포인트 입력 >> 황기태 60
+
+(이재문,40)(황기태,110)
+
+이름과 포인트 입력 >> 김남윤 30
+
+(이재문,40)(김남윤,30)(황기태,110)
+
+이름과 포인트 입력 >> 이재문 20
+
+(이재문,60)(김남윤,30)(황기태,110)
+
+이름과 포인트 입력 >> 그만
+
+이런 결과를 내고 싶은데
+
+이름 포인트 입력만 
