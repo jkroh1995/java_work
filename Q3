@@ -1,0 +1,35 @@
+import java.util.*;
+public class 나라이름과인구 {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		HashMap <String, Integer> map = new HashMap<String, Integer>();
+		Scanner sc = new Scanner(System.in);
+		
+		System.out.println("나라 이름과 인구를 입력하세요.(예: Korea 5000)");
+		while(true) {
+			System.out.print("나라이름, 인구>>");
+			String country = sc.next();
+			if(country.equals("그만"))
+				break;
+			Integer population = sc.nextInt();
+			map.put(country, population);
+		
+		}
+		while(true) {
+		System.out.print("인구 검색>>");
+		String input_c = sc.next();
+		if(input_c.equals("그만"))
+			break;
+		Integer population = map.get(input_c);
+		if(population == null)
+			System.out.println(input_c+"는 없는 나라입니다.");
+		else
+			System.out.println(input_c+"의 인구는"+population);
+		}
+	sc.close();
+	}
+
+}
+
+//while문에서 입력받는걸 sc.nextLine()으로 받으면 처음 한번만 실행되고 InputMismatch 예외가 발생하는데 이유가 무엇입니까?
