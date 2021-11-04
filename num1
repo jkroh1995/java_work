@@ -1,0 +1,74 @@
+package 연습;
+
+class Solution {
+	
+	public int [] solution(int money) {
+		
+		int[]result = {0,0,0,0,0,0,0,0,0};
+		int i=0;
+		int mok=0;
+		if(money/50000!=0) {
+			mok = money/50000;
+			result[i]=mok;
+			money = money%50000;
+		}
+		i++;
+		mok=0;
+		if(money/10000!=0) {
+			mok = money/10000;
+			result[i]=mok;
+			money = money%10000;
+		}
+		i++;
+		mok=0;
+		if(money/5000!=0) {
+			mok = money/5000;
+			result[i]=mok;
+			money = money%5000;
+		}
+		i++;
+		mok=0;
+		if(money/1000!=0) {
+			mok = money/1000;
+			result[i]=mok;
+			money = money%1000;
+		}
+		i++;
+		mok=0;
+		if(money/500!=0) {
+			mok = money/500;
+			result[i]=mok;
+			money = money%500;
+		}
+		i++;
+		mok=0;
+		if(money/100!=0) {
+			mok = money/100;
+			result[i]=mok;
+			money = money%100;
+		}
+		i++;
+		mok=0;
+		if(money/50!=0) {
+			mok = money/50;
+			result[i]=mok;
+			money = money%50;
+		}
+		i++;
+		mok=0;
+		if(money/10!=0) {
+			mok = money/10;
+			result[i]=mok;
+			money = money%10;
+		}
+		i++;
+		mok=0;
+		if(money!=0) {
+			mok = money;
+			result[i]=mok;
+		}
+
+		return result;
+	}
+
+}
