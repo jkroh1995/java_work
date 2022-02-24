@@ -1,0 +1,172 @@
+import java.util.*;
+class Timer implements Runnable{ //시공의 폭풍
+    public void run() {
+        int i = 3;
+        while(i>0) {
+            System.out.println(i+"...");
+            i--;
+            try {
+                Thread.sleep(1000);
+            }
+            catch(InterruptedException e) {
+                return;
+            }
+        }
+    }
+}
+public class TeamMade {
+    public static void main(String[] args) {
+        int n;
+        Scanner sc = new Scanner(System.in);
+
+        //전체 참가자 수 설정하고 전체 참가 인원 작성성
+       System.out.print("전체 인원 수 : ");
+        n = sc.nextInt();
+
+        String [] total_name = new String[n];
+
+        for(int i=0;i< total_name.length;i++){
+            System.out.print(i+1 + "번째 사람의 이름을 적어주세요 : ");
+            total_name[i]=sc.next();
+        }
+        System.out.println(" ");
+
+        System.out.print("전체 참가자입니다 : ");
+        for(int i=0;i< total_name.length;i++){
+            System.out.print(total_name[i]+" ");
+        }
+
+
+        int boss_num=n/5;
+
+        String [] boss = new String[boss_num]; //팀장
+
+        System.out.println(" ");
+        System.out.println(" ");
+
+        for(int i=0;i<boss_num;i++){
+            System.out.print("팀장의 이름을 적어주세요 : ");
+            boss[i]=sc.next();
+        }
+
+        //픽순 섞기
+        Collections.shuffle(Arrays.asList(boss));
+
+        int size=0;
+        for(String temp : boss){
+            boss[size++]=temp;
+        }
+        System.out.println(" ");
+        System.out.println("시공의 폭풍이 픽순을 마음대로 섞고있습니다");
+        Thread t = new Thread(new Timer());
+        t.start();
+        try {
+            t.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        System.out.println(" ");
+        for(int i=0;i<boss_num;i++){
+            System.out.println((i+1)+"번 째로 고르실 팀장님은 '"+boss[i]+"'님 입니다");
+        }
+
+        //total_player에서 팀장 이름 빼기
+        for(int i=0;i< total_name.length;i++){
+            for(int j=0;j<boss.length;j++){
+                if(total_name[i].equals(boss[j])){
+                    total_name[i]="팀장";
+                }
+            }
+        }
+
+        ArrayList<String> player = new ArrayList<>();
+        for(String temp : total_name) {
+                player.add(temp);
+        }
+
+        for(int i=0;i<player.size();i++){
+            player.remove("팀장");
+        }
+
+        //팀장 수만큼 팀 생성
+        String [][] team = new String[boss_num][5];
+        for(int i=0;i<boss_num;i++){
+            team[i][0]=boss[i];
+        }
+
+        //팀원 뽑기
+        int member;
+        int count=0;
+        while(player.size()!=0){
+            System.out.println(" ");
+            System.out.print("맛있는 매물이 많네요!  ");
+            for(int i=0;i<player.size();i++){
+                System.out.print(player.get(i)+" ");
+            }
+            System.out.println(" ");
+
+            if(count/boss_num%2==0) {
+                member=count%boss_num;
+                int seat =count/boss_num+1;
+                System.out.print(boss[member] + " 팀장님이 뽑을 차례입니다 : ");
+                String pick = sc.next();
+                player.remove(pick);
+                team[member][seat]=pick;
+
+                count++;
+            }
+            else if(count/boss_num%2!=0){
+                member=boss_num-count%boss_num-1;
+                int seat =count/boss_num+1;
+                System.out.print(boss[member] + " 팀장님이 뽑을 차례입니다 : ");
+                String pick = sc.next();
+                player.remove(pick);
+                team[member][seat]=pick;
+
+                count++;
+            }
+            System.out.println("==========현재 팀===========");
+            for (int i = 0; i < team.length; i++) {
+                String [] inArr = team[i];
+                for (int j = 0; j < inArr.length; j++) {
+                    if(inArr[j]==null){
+                        continue;
+                    }
+                    else
+                        System.out.print("["+inArr[j] + "] ");
+                }
+                System.out.println();
+            }
+
+
+
+
+        }
+        System.out.println(" ");
+        System.out.println("팀 선정이 끝났습니다");
+
+        //전체 팀 출력
+
+        for (int i = 0; i < team.length; i++) {
+            System.out.print("<"+boss[i]+"> 팀 : ");
+            String [] inArr = team[i];
+            for (int j = 0; j < inArr.length; j++) {
+                if(inArr[j]==null){
+                    continue;
+                }
+                else
+                System.out.print("["+inArr[j] + "] ");
+            }
+            System.out.println();
+        }
+
+        //게임 순서 정하기
+        System.out.println(" ");
+        System.out.println("게임 순서는 다음과 같습니다");
+        for(int i=0;i<boss_num;i++){
+            System.out.print((i+1)+".["+boss[i]+"]팀 ");
+        }
+
+
+    }
+}
