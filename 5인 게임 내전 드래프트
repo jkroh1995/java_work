@@ -26,15 +26,24 @@ public class ss {
         String [] total_name = new String[n];
 
         for(int i=0;i< total_name.length;i++){
-            System.out.print(i+1 + "번째 사람의 이름을 적어주세요 : (이름을 바꾸시려면 변경을 입력하세요.)");
+            System.out.print(i+1 + "번째 사람의 이름을 적어주세요 : (이름을 바꾸시려면 변경, 처음부터 입력하려면 다시를 입력하세요.)");
             String join = sc.next();
             if(join.equals("변경")){
                 i=i-2;
                 continue;
             }
+            else if(join.equals("다시")){
+                i=-1;
+                continue;
+            }
             else {
                 total_name[i] = join;
             }
+            System.out.print("현재 참여 인원 : ");
+            for(int j=0;j<i+1;j++){
+                System.out.print(total_name[j]+" ");
+            }
+            System.out.println("");
 
         }
         System.out.println(" ");
@@ -49,15 +58,24 @@ public class ss {
             String[] rest = new String[n % 5];
 
             for (int i = 0; i < rest.length;i++){
-                System.out.print("휴식 인원을 적어주세요 : (이름을 바꾸시려면 변경을 입력하세요.)");
+                System.out.print("휴식 인원을 적어주세요 : (이름을 바꾸시려면 변경, 처음부터 입력하려면 다시를 입력하세요.)");
                 String resting = sc.next();
                 if(resting.equals("변경")){
                     i=i-2;
                     continue;
                 }
-                else {
-                    rest[i] = sc.next();
+                else if(resting.equals("다시")){
+                    i=-1;
+                    continue;
                 }
+                else {
+                    rest[i] = resting;
+                }
+                System.out.print("휴식 인원 : ");
+                for(int j=0;j<i+1;j++){
+                    System.out.print(rest[j]+" ");
+                }
+                System.out.println("");
             }
             for(int i=0;i< total_name.length;i++){
                 for(int j=0;j<rest.length;j++){
@@ -76,15 +94,24 @@ public class ss {
 
 
         for(int i=0;i<boss_num;i++){
-            System.out.print("팀장의 이름을 적어주세요 : (변경을 원하시면 변경을 입력하세요.)");
+            System.out.print("팀장의 이름을 적어주세요 : (이름을 바꾸시려면 변경, 처음부터 입력하려면 다시를 입력하세요.)");
             String boss_name=sc.next();
             if(boss_name.equals("변경")){
                 i=i-2;
                 continue;
             }
+            else if(boss_name.equals("다시")){
+                i=-1;
+                continue;
+            }
             else{
                 boss[i]=boss_name;
             }
+            System.out.print("현재 팀장 : ");
+            for(int j=0;j<i+1;j++){
+                System.out.print(boss[j]+" ");
+            }
+            System.out.println("");
         }
 
         //픽순 섞기
@@ -150,7 +177,7 @@ public class ss {
             if(count/boss_num%2==0) {
                 member=count%boss_num;
                 int seat =count/boss_num+1;
-                System.out.print(boss[member] + " 팀장님이 뽑을 차례입니다 : ");
+                System.out.print(boss[member] + " 팀장님이 뽑을 차례입니다 : (한 번 선택한 팀원은 바꿀 수 없습니다! 신중하게 선택해주세요!)");
                 String pick = sc.next();
                 if(player.contains(pick)) {
                     player.remove(pick);
@@ -167,7 +194,7 @@ public class ss {
             else if(count/boss_num%2!=0){
                 member=boss_num-count%boss_num-1;
                 int seat =count/boss_num+1;
-                System.out.print(boss[member] + " 팀장님이 뽑을 차례입니다 : ");
+                System.out.print(boss[member] + " 팀장님이 뽑을 차례입니다 : (한 번 선택한 팀원은 바꿀 수 없습니다! 신중하게 선택해주세요!)");
                 String pick = sc.next();
                 if(player.contains(pick)) {
                     player.remove(pick);
