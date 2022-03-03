@@ -26,8 +26,16 @@ public class ss {
         String [] total_name = new String[n];
 
         for(int i=0;i< total_name.length;i++){
-            System.out.print(i+1 + "번째 사람의 이름을 적어주세요 : ");
-            total_name[i]=sc.next();
+            System.out.print(i+1 + "번째 사람의 이름을 적어주세요 : (이름을 바꾸시려면 변경을 입력하세요.)");
+            String join = sc.next();
+            if(join.equals("변경")){
+                i=i-2;
+                continue;
+            }
+            else {
+                total_name[i] = join;
+            }
+
         }
         System.out.println(" ");
 
@@ -41,8 +49,15 @@ public class ss {
             String[] rest = new String[n % 5];
 
             for (int i = 0; i < rest.length;i++){
-                System.out.print("휴식 인원을 적어주세요 : ");
-                rest[i]=sc.next();
+                System.out.print("휴식 인원을 적어주세요 : (이름을 바꾸시려면 변경을 입력하세요.)");
+                String resting = sc.next();
+                if(resting.equals("변경")){
+                    i=i-2;
+                    continue;
+                }
+                else {
+                    rest[i] = sc.next();
+                }
             }
             for(int i=0;i< total_name.length;i++){
                 for(int j=0;j<rest.length;j++){
@@ -61,8 +76,15 @@ public class ss {
 
 
         for(int i=0;i<boss_num;i++){
-            System.out.print("팀장의 이름을 적어주세요 : ");
-            boss[i]=sc.next();
+            System.out.print("팀장의 이름을 적어주세요 : (변경을 원하시면 변경을 입력하세요.)");
+            String boss_name=sc.next();
+            if(boss_name.equals("변경")){
+                i=i-2;
+                continue;
+            }
+            else{
+                boss[i]=boss_name;
+            }
         }
 
         //픽순 섞기
