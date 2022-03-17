@@ -245,6 +245,12 @@ public class ss {
         //게임 순서 정하기
         System.out.println(" ");
         System.out.println("게임 순서는 다음과 같습니다");
+        Collections.shuffle(Arrays.asList(boss));
+
+        for(String temp : boss){
+            boss[size++]=temp;
+        }
+
         for(int i=0;i<boss_num;i++){
             System.out.print((i+1)+".["+boss[i]+"]팀 ");
         }
