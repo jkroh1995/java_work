@@ -1,0 +1,20 @@
+public class Algorithm {
+    public static void mergesort(int [] arr, int p, int q){
+
+        if(p<q){
+            int k = (p+q)/2;
+            mergesort(arr, p, k);
+            mergesort(arr, k+1, q);
+        }
+
+
+    }
+
+    public static void main(String[] args) {
+        int [] temp ={37, 10, 22, 30, 35, 13, 25, 24};
+        mergesort(temp, 0, temp.length-1);
+        for(int i=0;i<temp.length;i++){
+            System.out.print(temp[i]+" ");
+        }
+    }
+}
